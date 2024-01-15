@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>박성재의 로또 추첨</title>
+  <style>
+* {
+  box-sizing: border-box;
+}
+*::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  min-height: 100vh;
+  background: #fbf6e6;
+}
+
+#container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 6.25rem;
+  height: 6.25rem;
+}
+
+button {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  border: 0;
+  vertical-align: middle;
+}
+button.face-button {
+  width: 6.25rem;
+  height: 6.25rem;
+  border-radius: 50%;
+  background: #fdda5f;
+  box-shadow: inset 2px -4px 18px #fd9744;
+}
+
+.face-container {
+  position: relative;
+  display: block;
+  width: 40px;
+  height: 20px;
+  margin: auto;
+}
+
+.eye {
+  position: absolute;
+  height: 0.5rem;
+  width: 0.5rem;
+  background: #2a2927;
+  border-radius: 50%;
+  -webkit-animation: eyeBlink 3200ms linear infinite;
+          animation: eyeBlink 3200ms linear infinite;
+}
+.eye.left {
+  left: 0;
+}
+.eye.right {
+  left: 2rem;
+}
+
+.mouth {
+  position: absolute;
+  top: 1.125rem;
+  left: 0.8rem;
+  width: 1rem;
+  height: 0.125rem;
+  background: #2a2927;
+  border-radius: 0;
+}
+
+.eye, .mouth {
+  box-shadow: inset 1px 2px 4px #121110;
+}
+
+.face-button:hover .mouth,
+.face-button:active .mouth {
+  left: 1rem;
+  width: 0.5rem;
+  height: 0.4rem;
+  border-radius: 1rem 1rem 0.125rem 0.125rem;
+}
+
+.face-button:hover .eye,
+.face-button:active .eye {
+  height: 0.375rem;
+  width: 0.375rem;
+  box-shadow: 0 0 0 0.25rem #fff;
+}
+
+@-webkit-keyframes eyeBlink {
+  0%, 30%, 36%, 100% {
+    transform: scale(1);
+  }
+  32%, 34% {
+    transform: scale(1, 0);
+  }
+}
+
+@keyframes eyeBlink {
+  0%, 30%, 36%, 100% {
+    transform: scale(1);
+  }
+  32%, 34% {
+    transform: scale(1, 0);
+  }
+}
+  </style>
+  <script>
+const faceButton = document.querySelector('.face-button');
+const faceContainer = document.querySelector('.face-container');
+const containerCoords = document.querySelector('#container');
+
+
+  </script>
+  <script>
+    function lottoGo(){
+      
+        //로또 한게임생성
+  
+      //1. 로또 번호는 6개
+      var lotto = []; //6개로 값이 나열될것이기 때문에 배열처리 - 값은 담지 않음
+  
+      //6번처리 - 반복문
+      for(var i=0;i<6;i++){
+        //새로 추가될 숫자 : 1~45사이의 숫자가 랜덤하게 처리
+        //random() : 0~1미만사이의 랜덤한 소수
+        //floor() : 내림처리해서 정수로 변경
+        var num = Math.floor(Math.random() * 45) + 1;
+  
+        //현재 상태는 같은 숫자가 나올수 있음
+        //lotto라는 배열에 담긴 숫자와 같이 같으면 안됨
+        for(var j in lotto){
+          while(num == lotto[j]){ //현재 새로나온 숫자가 기존 숫자와 같으면
+            num = Math.floor(Math.random() * 45) + 1;
+          }
+        }
+  
+        //push() - 배열에 마지막에 값추가메서드
+        lotto.push(num);
+      }
+  
+      //오름차순으로 숫자 정렬
+      lotto.sort(function(a,b){
+        return a - b;
+      });
+      const temp = document.getElementById("boxWrap");
+      for(var i=0; i<lotto.length; i++){
+        temp.innerHTML += `<div style="display: inline-block;margin: 5px;padding: 10px;font-size: 18px;font-weight: bold;color: #fff;background-color: #4285f4;border-radius: 50%;width: 40px;height: 40px;text-align: center;line-height: 30px;">`+lotto[i]+`</div>`;
+      }
+      temp.innerHTML+=`<br>`
+    }
+    </script>
+</head>
+<body>
+  <div>
+    <h2>행운의 로또번호를 받아보세요~</h2>
+    <div>클릭👇</div><br>
+    <div id="container">
+      <button class="face-button" onclick="javascript:lottoGo();">
+        <span class="face-container">
+          <span class="eye left"></span>
+          <span class="eye right"></span>
+          <span class="mouth"></span>
+        </span>
+      </button>
+    </div>
+    <!-- 박스 추가되는 영역 -->
+    <div id="boxWrap">
+    </div> <br><br>
+    <div>당첨되면 성재에게 수수료를...</div>
+    <br><br>
+    <a href="https://www.instagram.com/sj__619"><img src="pngwing.com.png" width="50px"/></a>
+  </div>
+</body>
+</html>
