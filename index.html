@@ -161,8 +161,28 @@ const containerCoords = document.querySelector('#container');
       temp.innerHTML+=`<br>`
     }
     </script>
+      <script>
+	// F12 버튼 방지 
+	$(document).ready(function(){ 
+		$(document).bind('keydown',function(e){ 
+			if ( e.keyCode == 123 /* F12 */) { 
+				e.preventDefault(); 
+				e.returnValue = false; 
+				} 
+			}); 
+		}); 
+	// 우측 클릭 방지 
+	document.onmousedown=disableclick; 
+	
+	function disableclick(event){ 
+		if (event.button==2) { 
+			return false; 
+			} 
+		} 
+
+    </script>
 </head>
-<body>
+<body oncontextmenu='return false'>
   <div>
     <h2>행운의 로또번호를 받아보세요~</h2>
     <div>클릭👇</div><br>
